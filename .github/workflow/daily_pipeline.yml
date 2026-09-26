@@ -1,0 +1,27 @@
+name: Automated Daily Weather Pipeline
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every day
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        # Make sure you have a requirements.txt in your root folder
+        run: pip install -r requirements.txt
+
+      - name: Execute Daily Pipeline (Ingest -> Classify -> Correct -> Publish)
+        # Point this to whatever python script runs your AI pipeline
+        run: python scripts/daily_pipeline.py
