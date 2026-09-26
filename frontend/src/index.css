@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Windy-style Map Cursor */
+.leaflet-container {
+  cursor: crosshair !important;
+}
+
+/* Radar Pulse Animation for the Marker */
+.radar-marker {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+.radar-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-color: #f59e0b; /* Amber-500 */
+  border-radius: 50%;
+  z-index: 10;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.8);
+}
+.radar-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background-color: rgba(245, 158, 11, 0.4);
+  border-radius: 50%;
+  z-index: 5;
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: translate(-50%, -50%) scale(0.3); opacity: 1; }
+  80% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+}

@@ -68,7 +68,9 @@
 
   <script>
     // Points to your running FastAPI backend
-    const API_BASE = "http://localhost:8000";
+
+    // Points to your deployed FastAPI backend
+    const API_BASE = "https://your-new-render-app.onrender.com";
 
     async function fetchForecast() {
       const date = document.getElementById("dateInput").value;
@@ -94,5 +96,6 @@
       }
     }
   </script>
+
 </body>
 </html>

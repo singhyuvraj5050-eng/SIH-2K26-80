@@ -1,98 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MoES Monsoon AI Forecast</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-900 text-slate-100 min-h-screen p-8">
-  <div class="max-w-4xl mx-auto">
-    <header class="border-b border-slate-700 pb-4 mb-8">
-      <h1 class="text-3xl font-bold text-sky-400">Regime-Aware Monsoon Rainfall AI</h1>
-      <p class="text-slate-400 text-sm mt-1">SIH 26080 | MoES / NCMRWF Operational Post-Processing</p>
-    </header>
-
-    <!-- Query Form -->
-    <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 mb-8 shadow-lg">
-      <h2 class="text-lg font-semibold mb-4 text-slate-200">Query Forecast Point</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <label class="block text-xs uppercase tracking-wide text-slate-400 mb-1">Date</label>
-          <input type="date" id="dateInput" value="2023-06-01" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-sky-500" />
-        </div>
-        <div>
-          <label class="block text-xs uppercase tracking-wide text-slate-400 mb-1">Latitude (°N)</label>
-          <input type="number" step="0.01" id="latInput" value="19.07" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-sky-500" />
-        </div>
-        <div>
-          <label class="block text-xs uppercase tracking-wide text-slate-400 mb-1">Longitude (°E)</label>
-          <input type="number" step="0.01" id="lonInput" value="72.87" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-sky-500" />
-        </div>
-      </div>
-      <button onclick="fetchForecast()" class="mt-4 w-full bg-sky-600 hover:bg-sky-500 text-white font-medium py-2 px-4 rounded-lg transition duration-200">
-        Run AI Bias Correction
-      </button>
-    </div>
-
-    <!-- Results Display -->
-    <div id="resultsCard" class="hidden space-y-6">
-      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
-        <div>
-          <span class="text-xs uppercase text-slate-400 tracking-wide">Synoptic Weather Regime</span>
-          <div id="regimeBadge" class="text-xl font-bold text-amber-400 mt-1">--</div>
-        </div>
-        <div class="text-right">
-          <span class="text-xs uppercase text-slate-400 tracking-wide">Nearest Grid Point</span>
-          <div id="gridCoords" class="text-sm font-mono text-slate-300 mt-1">--</div>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="bg-slate-800/80 p-5 rounded-xl border border-slate-700">
-          <p class="text-xs uppercase text-slate-400 font-medium">Raw NWP Forecast</p>
-          <p id="rawRain" class="text-3xl font-bold text-slate-200 mt-2">-- mm</p>
-        </div>
-        <div class="bg-slate-800/80 p-5 rounded-xl border border-sky-500/40">
-          <p class="text-xs uppercase text-sky-400 font-medium">AI Corrected</p>
-          <p id="corrRain" class="text-3xl font-bold text-sky-300 mt-2">-- mm</p>
-          <p id="biasDelta" class="text-xs text-slate-400 mt-1">--</p>
-        </div>
-        <div class="bg-slate-800/80 p-5 rounded-xl border border-slate-700">
-          <p class="text-xs uppercase text-emerald-400 font-medium">Actual IMD Obs</p>
-          <p id="obsRain" class="text-3xl font-bold text-emerald-300 mt-2">-- mm</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Points to your running FastAPI backend
-    const API_BASE = "http://localhost:8000";
-
-    async function fetchForecast() {
-      const date = document.getElementById("dateInput").value;
-      const lat = document.getElementById("latInput").value;
-      const lon = document.getElementById("lonInput").value;
-
-      try {
-        const res = await fetch(`${API_BASE}/forecast?date=${date}&lat=${lat}&lon=${lon}`);
-        if (!res.ok) throw new Error("Forecast data unavailable for this query.");
-        const data = await res.json();
-
-        document.getElementById("resultsCard").classList.remove("hidden");
-        document.getElementById("regimeBadge").innerText = data.synoptic_regime;
-        document.getElementById("gridCoords").innerText = `${data.nearest_grid.lat}°N, ${data.nearest_grid.lon}°E`;
-        document.getElementById("rawRain").innerText = `${data.rainfall_mm.raw_nwp} mm`;
-        document.getElementById("corrRain").innerText = `${data.rainfall_mm.ai_corrected} mm`;
-        document.getElementById("obsRain").innerText = `${data.rainfall_mm.observed_actual} mm`;
-
-        const delta = data.bias_adjustment_applied;
-        document.getElementById("biasDelta").innerText = delta >= 0 ? `Adjustment: +${delta} mm` : `Adjustment: ${delta} mm`;
-      } catch (err) {
-        alert(err.message);
-      }
-    }
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>frontend</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
