@@ -68,7 +68,6 @@ function WindyParticleLayer({ isProcessing }) {
     const ctx = canvas.getContext('2d');
 
     let animationFrameId;
-    // DECREASED DENSITY: Halved the particle count from 2500 to 1200
     const numParticles = 1200; 
     let particles = [];
 
@@ -146,7 +145,7 @@ function WindyParticleLayer({ isProcessing }) {
   return null;
 }
 
-// 6. NEW: Horizontal Legend Component
+// 6. Horizontal Legend Component
 function MapLegend() {
   return (
     <div className="absolute bottom-8 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:right-8 z-[1000] pointer-events-auto drop-shadow-2xl">
@@ -154,7 +153,6 @@ function MapLegend() {
         className="h-10 rounded-full flex items-center justify-between px-5 text-white text-[14px] font-bold tracking-wide border border-white/20 shadow-[0_10px_20px_rgba(0,0,0,0.5)]"
         style={{
           width: '380px',
-          // Matches the blue-to-purple gradient from the screenshot
           background: 'linear-gradient(to right, #388299, #28a08d, #4eb353, #99c746, #c5d73f, #f2a638, #ed5840, #d53664, #9a2cb1)'
         }}
       >
@@ -234,10 +232,10 @@ export default function App() {
             updateWhenIdle={true}
           />
           
-          {/* NEW: Global Earthy Map Tint (Placed under the radar/particles) */}
+          {/* NEW: Icy, Whitish-Blue Map Tint (Placed under the radar/particles) */}
           <Rectangle 
             bounds={[[-90, -180], [90, 180]]} 
-            pathOptions={{ stroke: false, fillColor: '#92754d', fillOpacity: 0.25 }} 
+            pathOptions={{ stroke: false, fillColor: '#bae6fd', fillOpacity: 0.12 }} 
             interactive={false} 
           />
           
