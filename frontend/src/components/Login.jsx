@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { CloudRain, Lock, User as UserIcon, ArrowRight, ShieldAlert, Sun, Moon, UserPlus, LogIn, BadgeCheck } from 'lucide-react';
+import { CloudRain, Lock, User as UserIcon, ArrowRight, ShieldAlert, Sun, Moon, UserPlus, LogIn, BadgeCheck, Info } from 'lucide-react';
 
 export default function Login({ onLogin, isDarkMode, setIsDarkMode }) {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -75,6 +75,7 @@ export default function Login({ onLogin, isDarkMode, setIsDarkMode }) {
         localStorage.setItem(formData.id, JSON.stringify({ name: formData.name, password: formData.password }));
         userData = { name: formData.name, id: formData.id };
       } else {
+        // Built-in evaluator backdoor
         if (formData.id === 'SIH-EVAL-26080' && formData.password === 'admin123') {
           userData = { name: 'Evaluation Judge', id: 'SIH-EVAL-26080' };
         } else {
@@ -110,7 +111,6 @@ export default function Login({ onLogin, isDarkMode, setIsDarkMode }) {
     <>
       <style>{`
         :root {
-          /* Smooth Cream/Off-White Palette */
           --bg-app: #F4F2EA;
           --bg-card: #FCFAF5;
           --bg-input: #EAE6DB;
@@ -125,7 +125,7 @@ export default function Login({ onLogin, isDarkMode, setIsDarkMode }) {
           --bg-card: #161B22;
           --bg-input: #1F242C;
           --border-subtle: #2B313A;
-          --text-primary: #F0EBE1; /* Soft cream-white for dark mode text */
+          --text-primary: #F0EBE1; 
           --text-secondary: #9CA3AF;
           --primary-accent: #D97706;
           --badge-success: #10B981;
@@ -185,7 +185,7 @@ export default function Login({ onLogin, isDarkMode, setIsDarkMode }) {
                 <input required type="password" name="password" value={formData.password} onChange={handleInputChange} placeholder="Secure Passcode" className="w-full bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded-md py-3.5 pl-12 pr-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-secondary)] focus:outline-none focus:border-[var(--primary-accent)] transition-all duration-300 font-medium" />
               </div>
 
-              <div className="pt-4">
+              <div className="pt-2">
                 <button disabled={isSubmitting} type="submit" className="w-full bg-[var(--primary-accent)] text-white border-transparent font-bold py-3.5 rounded-md flex items-center justify-center gap-3 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-50 cursor-pointer">
                   <span>{isSubmitting ? "VERIFYING CREDENTIALS..." : (isLoginMode ? "AUTHENTICATE" : "REGISTER ANALYST")}</span>
                   {!isSubmitting && <ArrowRight size={18} />}
@@ -193,7 +193,19 @@ export default function Login({ onLogin, isDarkMode, setIsDarkMode }) {
               </div>
             </form>
 
-            <div className="mt-6 border-t border-[var(--border-subtle)] pt-5 text-center">
+            {/* QUICK ACCESS / EVALUATOR CREDENTIALS */}
+            <div className="mt-5 p-3 bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded-md shadow-inner text-center">
+              <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider font-bold mb-1.5 flex justify-center items-center gap-1.5">
+                <Info size={12} className="text-[var(--primary-accent)]" /> Demo Evaluation Access
+              </p>
+              <div className="flex justify-center items-center gap-3 text-[11px] text-[var(--text-primary)]">
+                <span>ID: <code className="font-mono font-bold text-[var(--primary-accent)] bg-[var(--bg-card)] px-1.5 py-0.5 rounded border border-[var(--border-subtle)]">SIH-EVAL-26080</code></span>
+                <span className="text-[var(--text-secondary)]">|</span>
+                <span>Pass: <code className="font-mono font-bold text-[var(--primary-accent)] bg-[var(--bg-card)] px-1.5 py-0.5 rounded border border-[var(--border-subtle)]">admin123</code></span>
+              </div>
+            </div>
+
+            <div className="mt-5 border-t border-[var(--border-subtle)] pt-5 text-center">
               <button onClick={toggleMode} type="button" className="text-xs font-bold text-[var(--text-secondary)] hover:text-[var(--primary-accent)] transition-colors duration-300 flex items-center justify-center gap-2 w-full cursor-pointer">
                 {isLoginMode ? (<><UserPlus size={14} /> NO CLEARANCE? REGISTER NEW ID</>) : (<><LogIn size={14} /> ALREADY REGISTERED? PROCEED TO LOGIN</>)}
               </button>
